@@ -72,58 +72,67 @@ element delete(arraylist* L, int pos) {
 }
 
 int main(void) {
-	arraylist L;
-	int num, item, pos;
+    arraylist L;
+    int num, item, pos, count = 0;
 
-	init(&L);
+    init(&L);
 
-	while (1) {
-		printf("*** MENU ****\n");
-		printf("1. INSERT\n");
-		printf("2. DELETE\n");
-		printf("3. PRINT\n");
-		printf("0. EXIT\n\n");
-		printf("Enter the menu: ");
-		scanf("%d", &num);
+    while (1) {
+        printf("*** MENU ****\n");
+        printf("1. INSERT\n");
+        printf("2. DELETE\n");
+        printf("3. PRINT\n");
+        printf("0. EXIT\n\n");
+        printf("Enter the menu: ");
+        scanf("%d", &num);
 
-		switch (num) {
-		case 1:
-			printf("Enter the number and position: ");
-			scanf("%d %d", &item, &pos);
-			if (pos == 0) {
-				insert(&L, 0, item);
-			}
-			else if (pos > 0 && pos <= L.size) {
-				insert(&L, pos, item);
-			}
-			else {
-				printf("Invalid position\n");
-			}
-			break;
-		case 2:
-			printf("Enter the position: ");
-			scanf("%d", &pos);
-			if (pos >= 0 && pos < L.size) {
-				item = delete(&L, pos);
-				printf("Deleted item: %d\n", item);
-			}
-			else {
-				printf("Invalid position\n");
-			}
-			
-			break;
-		case 3:
-			print_list(&L);
-			break;
-		case 0:
-			printf("Exit the program\n");
-			exit(0);
-		default:
-			printf("Invalid menu option\n");
-			break;
-		}
-	}
+        switch (num) {
+        case 1:
+            printf("Enter the number and position: ");
+            scanf("%d %d", &item, &pos);
+            if (pos == 0) {
+                insert(&L, 0, item);
+                count++;
+            }
+            else if (pos > 0 && pos <= L.size) {
+                count = 0;
+                insert(&L, pos, item, &count);
+                count++;
+            }
+            else {
+                printf("Invalid position\n");
+                continue;
+            }
+            printf("MOVE: %d.\n", count);
+            break;
+        case 2:
+            printf("Enter the position: ");
+            scanf("%d", &pos);
+            if (pos >= 0 && pos < L.size) {
+                count = 0;
+                item = delete(&L, pos, count);
+                count++;
+                printf("Deleted item: %d\n", item);
+                printf("MOVE: %d.\n", count);
+            }
+            else {
+                printf("Invalid position\n");
+                continue;
+            }
+            break;
+        case 3:
+            print_list(&L);
+            break;
+        case 0:
+            printf("Exit the program\n");
+            exit(0);
+        default:
+            printf("Invalid menu option\n");
+            break;
+        }
+    }
 }
+
 
 
 
